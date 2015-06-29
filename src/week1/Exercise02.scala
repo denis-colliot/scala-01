@@ -7,22 +7,31 @@ package week1
  */
 object Exercise02 extends App {
 
-  def pascal(col: Int, row: Int): Int = {
-
-    if (row < 0 || col < 0 || col > row) {
-      return 0
-    }
-
-    if (col == 0 || row == 0 || col == row) {
-      return 1
-    }
-
-    return pascal(col - 1, row - 1) + pascal(col, row - 1)
+  def balance(chars: List[Char]): Boolean = {
+    return balanceInner(chars, 0) == 0
   }
 
-  println("Pascal: " + pascal(0, 2)) // 1
-  println("Pascal: " + pascal(1, 2)) // 2
-  println("Pascal: " + pascal(1, 3)) // 3
-  println("Pascal: " + pascal(2, 4)) // 6
+  def balanceInner(chars: List[Char], count: Int): Int = {
+
+    if (chars.isEmpty) {
+      return count
+    }
+
+    if (chars.head == '(') {
+      return balanceInner(chars.tail, count + 1)
+
+    } else if (chars.head == ')') {
+      return balanceInner(chars.tail, count - 1)
+
+    } else {
+      return balanceInner(chars.tail, count)
+    }
+  }
+
+  println("01: " + balance("(test)".toList))
+  println("01: " + balance("(te(st)".toList))
+  println("01: " + balance("(te(s)t)".toList))
+  println("01: " + balance("(te(s)t".toList))
+  println("01: " + balance("(te(s))t".toList))
 
 }
